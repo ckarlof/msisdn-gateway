@@ -180,7 +180,7 @@ app.get("/", function(req, res) {
 /**
  * Ask for a new number registration
  **/
-app.post("/register", requireParams("msisdn"), validateMSISDN,
+app.post("/register", requireParams("msisdn"),
   function(req, res) {
     var token = new Token();
     token.getCredentials(function(tokenId, authKey, sessionToken) {
@@ -194,7 +194,7 @@ app.post("/register", requireParams("msisdn"), validateMSISDN,
         res.json(200, {
           msisdnSessionToken: sessionToken,
           verificationUrl: req.protocol + "://" + req.get("host") +
-            conf.get("apiPrefix") + "/sms/verify"
+            conf.get("apiPrefix") + "/sms_mt/verify"
         });
       });
     });
@@ -218,7 +218,7 @@ app.post("/unregister", hawkMiddleware, requireParams("msisdn"),
 /**
  * Ask for a new number registration
  **/
-app.post("/sms/verify", hawkMiddleware, requireParams("msisdn"),
+app.post("/sms_mt/verify", hawkMiddleware, requireParams("msisdn"),
   validateMSISDN, function(req, res) {
     var code = digitsCode(DIGIT_CODE_SIZE);
 
